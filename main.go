@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
 )
 
 type Configuration struct {
@@ -99,7 +100,7 @@ func main() {
 			query += " SUBSTRING(word, 5, 1) = '" + bodyConverted.FifthLetter + "'"
 		}
 		if len(bodyConverted.UnusedCharacters) > 0 {
-			for _, char := range bodyConverted.UnusedCharacters {
+			for _, char := range strings.ReplaceAll(bodyConverted.UnusedCharacters, ",", "") {
 				if len(query) > queryLength {
 					query += " AND "
 				}
@@ -107,7 +108,7 @@ func main() {
 			}
 		}
 		if len(bodyConverted.UsedCharacters) > 0 {
-			for _, char := range bodyConverted.UsedCharacters {
+			for _, char := range strings.ReplaceAll(bodyConverted.UsedCharacters, ",", "") {
 				if len(query) > queryLength {
 					query += " AND "
 				}
